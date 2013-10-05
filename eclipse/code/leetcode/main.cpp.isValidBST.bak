@@ -1,0 +1,83 @@
+#include "stdio.h"
+#include <iostream>
+#include "vector"
+#include "stack"
+#include "stdlib.h"
+
+using namespace std;
+struct TreeNode {
+	int val;
+	TreeNode *left;
+	TreeNode *right;
+	TreeNode(int x) :
+			val(x), left(NULL), right(NULL) {
+	}
+};
+
+class Solution {
+private:
+	int last;
+
+public:
+	bool isValid(TreeNode *root) {
+		if (root == NULL)
+			return true;
+		if (isValid(root->left) == false) {
+			return false;
+		}
+		if (root->val <= last)
+			return false;
+		else
+			last = root->val;
+		if (isValid(root->right) == false) {
+			return false;
+		}
+		return true;
+	}
+public:
+	bool isValidBST(TreeNode *root) {
+		last = -999999;
+		return isValid(root);
+	}
+};
+
+int main(void) {
+	int ***a;
+	int line = 3;
+	int column = 4;
+	int dimension = 5;
+	a = new int**;
+	for( int i = 0 ; i < line ; ++i )
+	{
+		a[i] = new int*;
+		for( int j = 0 ; j < column  ; ++j )
+		{
+			a[i][j] = new int[dimension];
+		}
+	}
+	for( int i = 0 ; i < line ; ++i )
+	{
+		for( int j = 0 ; j < column ; ++j )
+		{
+			for( int k = 0 ; k < dimension ; ++k )
+			{
+				a[i][j][k] = i + j + k;
+			}
+		}
+	}
+
+	for( int i = 0 ; i < line ; ++i )
+	{
+		for( int j = 0 ; j < column ; ++j )
+		{
+			for( int k = 0 ; k < dimension ; ++k )
+			{
+				cout << a[i][j][k] << ' ' ;
+			}
+		}
+	}
+
+
+	cout << endl;
+}
+

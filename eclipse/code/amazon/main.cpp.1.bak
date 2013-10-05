@@ -1,0 +1,48 @@
+#include "iostream"
+#include "cstdlib"
+
+using namespace std;
+
+int main( void )
+{
+	int num;
+	cin >> num;
+	char **a = ( char ** )malloc( sizeof( char * ) );
+	for( int i = 0 ; i < num ; ++i )
+	{
+		a[i] = ( char * )malloc( num * sizeof ( int ) );
+	}
+	int central = num / 2 + 1;
+	a[central][central] = 1;
+	int count = 1;
+	int interval = 2;
+	for( int i = 1 ; i <= num ; ++i  )
+	{
+		for( int j = 1 ; j <= interval ; ++j  )
+		{
+			a[j][central+1] = count++;
+		}
+		for( int j = interval - 1 ; j >= 0 ; ++j )
+		{
+			a[central+1][j] = count++;
+			a[j][0] = count++;
+		}
+		for( int j = interval - 1 ; j >= 0 ; ++j )
+		{
+			a[j][0] = count++;
+		}
+		for( int j = 1 ; j <= interval ; ++j  )
+		{
+			a[0][j] = count++;
+		}
+		interval++;
+	}
+	for( int i = 0 ; i < num ; ++i )
+	{
+		for( int j = 0 ; j < num ; ++j )
+		{
+			cout << a[i][j] << "*";
+		}
+		cout << endl;
+	}
+}

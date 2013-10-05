@@ -1,0 +1,79 @@
+#include "stdio.h"
+#include <iostream>
+#include "vector"
+#include "stack"
+#include "stdlib.h"
+
+using namespace std;
+
+class Solution
+{
+private:
+    int findPos(int A[], int n)
+    {
+        int begin = 0;
+        int end = n;
+        int mid = 0;
+        while (1)
+        {
+            mid = begin + (end - begin) / 2;
+            if (begin == mid)
+                break;
+            if (A[begin] > A[mid])
+            {
+                end = mid;
+            }
+            else
+            {
+                begin = mid;
+            }
+        }
+        return begin;
+    }
+
+private:
+    int bisearch(int A[], int begin, int end, int target)
+    {
+        cout << begin << " " << end << endl;
+        int mid = 0;
+        while (begin <= end)
+        {
+            mid = begin + (end - begin) / 2;
+            if (A[mid] > target)
+            {
+                end = mid - 1;
+            }
+            else if (A[mid] < target)
+            {
+                begin = mid + 1;
+            }
+            else
+            {
+                return mid;
+            }
+
+        }
+        return -1;
+    }
+public:
+    int search(int A[], int n, int target)
+    {
+        int pos = findPos(A, n - 1);
+//        cout << pos << endl;
+        int returnTmp;
+        returnTmp = bisearch(A, 0, pos, target);
+        if (returnTmp == -1)
+            return bisearch(A, pos + 1, n - 1, target);
+        return returnTmp;
+    }
+};
+
+int main(void)
+{
+    Solution nnew;
+    int A[] =
+    { 3, 1 };
+    int tmp = nnew.search(A, 2, 1);
+    cout << tmp << endl;
+    return 0;
+}

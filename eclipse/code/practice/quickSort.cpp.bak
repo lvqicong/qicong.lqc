@@ -1,0 +1,56 @@
+#include "stdio.h"
+
+#include "iostream"
+
+using namespace std;
+
+void quickSort(int *a, int head, int tail)
+{
+    if (head == tail) return;
+    int begin = head;
+    int end = tail;
+    int middle = a[begin];
+    while (begin != end)
+    {
+        while (end > begin)
+        {
+            if (a[end] < middle) break;
+            end--;
+        }
+        a[begin] = a[end];
+        while (begin < end)
+        {
+            if (a[begin] > middle) break;
+            begin++;
+        }
+        a[end] = a[begin];
+    }
+    a[begin] = middle;
+    for (int i = head; i <= tail; ++i)
+        cout << a[i] << " ";
+    cout << endl;
+    if (begin - 1 >= head) quickSort(a, head, begin - 1);
+    if (begin + 1 <= tail) quickSort(a, begin + 1, tail);
+
+}
+
+
+int main(void)
+{
+    cout << "hello world" << endl;
+    int a[10] =
+    { 2, 3, 1, 6, 4, 7, 9, 10, 8, 5 };
+    for (int i = 0; i < 10; ++i)
+    {
+        cout << a[i] << " ";
+    }
+    cout << endl;
+    int begin = 0;
+    int end = 9;
+    quickSort(a, begin, end);
+    for (int i = 0; i < 10; ++i)
+    {
+        cout << a[i] << " ";
+    }
+    return 0;
+}

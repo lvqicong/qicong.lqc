@@ -1,0 +1,142 @@
+#include "stdio.h"
+#include <iostream>
+#include "vector"
+#include "stack"
+#include "stdlib.h"
+
+using namespace std;
+
+void swap(int &a, int &b)
+{
+    int tmp = a;
+    a = b;
+    b = tmp;
+}
+
+class Heap
+{
+private:
+    int size;
+    int total;
+    int *data;
+public:
+    Heap()
+    {
+        data = new int[100];
+        size = 0;
+        total = 100;
+    }
+    Heap(int *a, int n)
+    {
+        data = new int[n + 1];
+        size = n;
+        total = n;
+        for (int i = 0; i < n; ++i)
+            data[i + 1] = a[i];
+        makeHeap();
+    }
+
+    void siftdown(int current)
+    {
+        int left, right, change;
+        while (current < size)
+        {
+            if (current * 2 <= size)
+                left = 2 * current;
+            else
+                return;
+            if (2 * current + 1 <= size)
+            {
+                right = 2 * current + 1;
+                if (data[left] > data[right])
+                {
+                    change = left;
+                }
+                else
+                {
+                    change = right;
+                }
+            }
+            else
+                change = left;
+            if (data[current] < data[change])
+            {
+                swap(data[current], data[change]);
+                current = change;
+            }
+            else
+            {
+                return;
+            }
+        }
+    }
+    void siftup(int current)
+    {
+        while (current > 1)
+        {
+            if (data[current] > data[current / 2])
+            {
+                swap(data[current], data[current / 2]);
+                current /= 2;
+            }
+            else
+            {
+                return;
+            }
+
+        }
+    }
+    void makeHeap()
+    {
+        for (int i = size / 2; i >= 1; --i)
+        {
+            siftdown(i);
+        }
+    }
+
+    int extract()
+    {
+        if (size >= 1)
+        {
+            int returnTmp = data[1];
+            data[1] = data[size--];
+            siftdown(1);
+            return returnTmp;
+        }
+        return -1;
+    }
+    void enter(int num)
+    {
+        if (size == total)
+        {
+            int *totalTmp = new int[2 * total + 1];
+            for (int i = 1; i <= total; ++i)
+            {
+                totalTmp[i] = data[i];
+            }
+            delete[] data;
+            data = totalTmp;
+            totalTmp = NULL;
+            total = total * 2 + 1;
+        }
+        data[++size] = num;
+        siftup(size);
+
+    }
+
+};
+
+int main(void)
+{
+    int a[10] =
+    { 1, 2, 3};
+    Heap *newHeap = new Heap(a, 3);
+    for (int i = 0; i < 3; ++i)
+        cout << newHeap->extract() << endl;
+    for (int i = 0; i < 100; ++i)
+        newHeap->enter(i);
+    for (int i = 0; i < 100; ++i)
+        cout << "num is " << newHeap->extract() << endl;
+    return 0;
+}
+

@@ -1,0 +1,72 @@
+#include "iostream"
+#include "string"
+using namespace std;
+
+class LittleElephantAndBalls
+{
+public:
+    int getNumber(string S)
+    {
+        int left[3] =
+        { 0 };
+        int right[3] =
+        { 0 };
+        int leftCount = 0;
+        int rightCount = 0;
+        int index = 0;
+        int total = 0;
+        for (unsigned int i = 0; i < S.size(); ++i)
+        {
+            total += leftCount + rightCount;
+            switch (S.at(i))
+            {
+                case 'R':
+                    index = 0;
+                    break;
+                case 'G':
+                    index = 1;
+                    break;
+                case 'B':
+                    index = 2;
+                    break;
+                default:
+                    index = 3;
+            }
+            if (leftCount >= rightCount)
+            {
+                if (right[index] == 0)
+                {
+                    right[index] = 1;
+                    rightCount++;
+                }
+                else if (left[index] == 0)
+                {
+                    left[index] = 1;
+                    leftCount++;
+                }
+            }
+            else if (leftCount < rightCount)
+            {
+                if (left[index] == 0)
+                {
+                    left[index] = 1;
+                    leftCount++;
+                }
+                else if (right[index] == 0)
+                {
+                    right[index] = 1;
+                    rightCount++;
+                }
+            }
+
+        }
+        return total;
+    }
+};
+
+int main(void)
+{
+    LittleElephantAndBalls *test = new LittleElephantAndBalls();
+    cout << test->getNumber("RGGRBBB");
+    return 0;
+}

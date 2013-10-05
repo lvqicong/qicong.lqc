@@ -1,0 +1,74 @@
+# include <stdio.h>
+
+
+typedef unsigned long long ull ;
+ull n, p, q ;
+
+
+void _1()
+{
+	ull m = n, pp, qq ;
+	ull one = 1LL ;
+	while(1)
+	{
+		m &= ~one ;
+		if (!m) break ;
+		one <<= 1 ;
+	}
+	one >>= 1 ;
+	p = 1, q = 1 ;
+	while (one)
+	{
+		if (n&one)
+			pp = (p+q), qq = q ;
+		else
+			pp = p, qq = (p+q) ;
+		p = pp, q = qq ;
+		one >>= 1 ;
+	}
+}
+
+
+ull _2(ull p, ull q)
+{
+	ull fp, fq ;
+	if (p == q) return 1 ;
+	if (p < q) //left child
+	{
+		fp = p ;
+		fq = q-p ;
+		return _2(fp, fq)*2 ;
+	}
+	else
+	{
+		fp = p-q ;
+		fq = q ;
+		return _2(fp, fq)*2 + 1 ;
+	}
+}
+
+
+int main ()
+{
+	int T, nCase = 1, a ;
+	freopen ("", "r", stdin) ;
+	freopen ("b_out.txt", "w", stdout) ;
+	scanf ("%d", &T) ;
+	while (T--)
+	{
+		scanf ("%d", &a) ;
+		if (a == 1)
+		{
+			scanf ("%I64u", &n) ;
+			_1() ;
+			printf ("Case #%d: %I64u %I64u\n", nCase++, p, q) ;
+		}
+		else
+		{
+			scanf ("%I64u%I64u", &p, &q) ;
+			n = _2(p,q) ;
+			printf ("Case #%d: %I64u\n", nCase++, n) ;
+		}
+	}
+	return 0 ;
+}

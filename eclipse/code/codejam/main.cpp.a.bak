@@ -1,0 +1,124 @@
+#include <iostream>
+#include "vector"
+#include "map"
+#include "string"
+#include "fstream"
+#include "stdio.h"
+
+using namespace std;
+
+string num[10] = { "zero", "one", "two", "three", "four", "five", "six",
+		"seven", "eight", "nine" };
+string acc[11] = {  "", "double", "triple", "quadruple" , "quintuple" , "sextuple", "septuple",
+		"octuple", "nonuple", "decuple" };
+
+int main(void) {
+	ifstream in( "A-small-attempt3.in" );
+	ofstream out( "a.out" );
+	int total = 0;
+	in >> total;
+	int counter = 0;
+	int number[11];
+	int pre = 0;
+	vector<int> sep;
+	int sepTmp, sepCount, sepTotal;
+	int dupCounter = 0;
+	string inputTmp,inputTmp2;
+	char ctmp;
+	while (total-- > 0) {
+		counter++;
+		in >> inputTmp;
+		for (int i = 0; i < inputTmp.size(); ++i) {
+			number[i] = inputTmp[i] - '0';
+		}
+		sep.clear();
+		in >> inputTmp2;
+		sepCount = 0;
+		sepTotal = 0;
+		for( int i = 0 ; i < inputTmp2.size() ; ++i )
+		{
+			if( inputTmp2[i] >= '0' && inputTmp2[i] <= '9' )
+			{
+				sepCount *= 10;
+				sepCount += inputTmp2[i] - '0';
+			}
+			else
+			{
+				sepTotal += sepCount;
+				sep.push_back( sepTotal );
+				sepCount = 0;
+			}
+		}
+		if( sepCount > 0 )
+		{
+			sepTotal += sepCount;
+			sep.push_back( sepTotal );
+		}
+		out << "Case #" << counter << ":";
+		pre = number[0];
+		dupCounter = 0;
+		int sepIndex = 0;
+		for (int i = 1; i < inputTmp.size(); ++i) {
+			if (i == sep[sepIndex] ) {
+				if (dupCounter != 0) {
+					if( dupCounter > 9 )
+					{
+						for( int k = 0 ; k < dupCounter + 1; ++k )
+						{
+							out << " " << num[pre];
+						}
+					}
+					else{
+						out << " " << acc[dupCounter] << " " << num[pre];
+					}
+					pre = number[i];
+					dupCounter = 0;
+				} else {
+					out << " " << num[pre];
+					pre = number[i];
+					dupCounter = 0;
+				}
+				sepIndex++;
+			} else {
+				if (pre == number[i]) {
+					dupCounter++;
+				} else {
+					if (dupCounter != 0) {
+						if( dupCounter > 9 )
+						{
+							for( int k = 0 ; k < dupCounter + 1; ++k )
+							{
+								out << " " << num[pre];
+							}
+						}
+						else{
+							out << " " << acc[dupCounter] << " " << num[pre];
+						}
+						pre = number[i];
+						dupCounter = 0;
+					} else {
+						out << " " << num[pre];
+						pre = number[i];
+						dupCounter = 0;
+					}
+				}
+			}
+		}
+		if (dupCounter != 0) {
+			if( dupCounter > 9 )
+			{
+				for( int k = 0 ; k < dupCounter + 1 ; ++k )
+				{
+					out << " " << num[pre];
+				}
+			}
+			else{
+				out << " " << acc[dupCounter] << " " << num[pre];
+			}
+		} else {
+			out << " " << num[pre];
+		}
+		out << endl;
+	}
+	return 0;
+}

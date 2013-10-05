@@ -1,0 +1,68 @@
+# include <stdio.h>
+# include <stdlib.h>
+
+
+int one[1010], two[1010], x[1010] ;
+int vis[1010] ;
+int myabs(int x){return x<0?-x:x;}
+
+
+int cmp1(const void *a, const void *b)
+{
+	return *(int*)a - *(int*) b ;
+}
+
+
+
+int cmp2(const void *a, const void *b)
+{
+	return *(int*)b - *(int*) a ;
+}
+
+void work()
+{
+	int n ;
+	int ocnt = 0, tcnt = 0 ;
+	int i ;
+	scanf ("%d", &n) ;
+	for (i = 0 ; i < n ; i++)
+		scanf ("%d", &x[i]) ;
+	for (i = 0 ; i < n ; i++)
+	{
+		if (myabs(x[i]) & 1)
+		{
+			vis[i] = 1 ;
+			one[ocnt++] = x[i] ;
+		}
+		else
+		{
+			vis[i] = 0 ;
+			two[tcnt++] = x[i] ;
+		}
+	}
+	qsort(one, ocnt, sizeof(one[0]), cmp1) ;
+	qsort(two, tcnt, sizeof(two[0]), cmp2) ;
+	ocnt = 0, tcnt = 0 ;
+	for (i = 0 ; i < n ; i++)
+	{
+		if (vis[i]) printf  ("%d", one[ocnt++]) ;
+		else printf ("%d", two[tcnt++]) ;
+		if (i != n-1) printf (" ") ;
+	}
+	printf ("\n") ;
+}
+
+
+int main ()
+{
+	int T, nCase = 1 ;
+	freopen ("", "r", stdin) ;
+	freopen ("c_out.txt","w", stdout) ;
+	scanf ("%d", &T) ;
+	while (T--)
+	{
+		printf ("Case #%d: ", nCase++) ;
+		work() ;
+	}
+	return 0 ;
+}

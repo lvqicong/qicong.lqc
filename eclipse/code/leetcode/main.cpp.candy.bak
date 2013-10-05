@@ -1,0 +1,49 @@
+#include "stdio.h"
+#include <iostream>
+#include "vector"
+#include "stack"
+#include "stdlib.h"
+
+using namespace std;
+
+class Solution {
+public:
+    int candy(vector<int> &ratings) {
+        vector<int> candy;
+        candy.resize(ratings.size());
+        for( int i = 0 ; i < ratings.size() ; ++i )
+            candy[i] = 1;
+        int total = 1;
+        for( int i = 1 ; i < ratings.size() ; ++i )
+        {
+            if( ratings[i] > ratings[i-1] )
+            {
+                candy[i] = candy[i-1] + 1;
+                total += candy[i];
+            }
+            else
+            {
+                total += candy[i];
+            }
+        }
+        for( int i = ratings.size() - 2 ; i >= 0 ; --i )
+        {
+            if( ratings[i] > ratings[i+1] && candy[i] <= candy[i+1] )
+            {
+                total += candy[i+1] + 1 - candy[i];
+                candy[i] = candy[i+1] + 1;
+            }
+        }
+        return total;
+    }
+};
+
+int main(void)
+{
+    Solution nnew;
+    int a[5] = { 4, 2, 3, 4, 1};
+    vector<int> A( a , a+5 );
+    int tmp = nnew.candy(A);
+    cout << tmp << endl;
+    return 0;
+}
