@@ -36,12 +36,12 @@ void EventArbiBase::runAlgorithm()
     reqTmp[0] = reqCount;
     delete engine;
 
-    engine = new DeviceTotalRandom;
-    configDevice();
-    reqCount = 0;
-    arbiAlgorithm();
-    reqTmp[1] = reqCount;
-    delete engine;
+//    engine = new DeviceTotalRandom;
+//    configDevice();
+//    reqCount = 0;
+//    arbiAlgorithm();
+//    reqTmp[1] = reqCount;
+//    delete engine;
 
     cout << "Average reqCount: " << reqTmp[0] << endl;
     cout << "Random repCount: " << reqTmp[1] << endl;

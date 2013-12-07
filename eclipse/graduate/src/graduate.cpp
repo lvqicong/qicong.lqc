@@ -13,10 +13,10 @@
 using namespace std;
 
 int main() {
-//	EventArbiBase *test = new EventArbiGroupSearch;
-//	test->runAlgorithm();
+	EventArbiBase *test = new EventArbiGroupSearch;
+	test->runAlgorithm();
 
-	EventArbiBase *test2 = new EventArbiBiSearch;
-	test2->runAlgorithm();
+//	EventArbiBase *test2 = new EventArbiBiSearch;
+//	test2->runAlgorithm();
 	return 0;
 }

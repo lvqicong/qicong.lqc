@@ -102,6 +102,19 @@ void EventArbiBiSearch::continus_config()
     }
 }
 
+void EventArbiBiSearch::interval_config()
+{
+    double *pArray = configer->getPArray();
+    int interval = TOTALDEVICE / deviceNum - 1;
+    int lastAddr = 1 ;
+    for( int i = 0 ; i < deviceNum ; ++i )
+    {
+        pResult[i] = pArray[i];
+        addrResult[i] = lastAddr;
+        lastAddr += interval;
+    }
+}
+
 void EventArbiBiSearch::configDevice()
 {
     configer = Config::getConfig();
@@ -112,8 +125,9 @@ void EventArbiBiSearch::configDevice()
     addrResult = new int[deviceNum];
 
     //config device address
-    huffman_config();
-//    continus_config();
+//    huffman_config();
+    continus_config();
+//    interval_config();
 
     //show encode
     for( int i = 0 ; i < deviceNum ; ++i )
@@ -127,24 +141,10 @@ void EventArbiBiSearch::configDevice()
     delete[] addrResult;
     pResult = NULL;
     addrResult = NULL;
-//    int interval = TOTALDEVICE / deviceNum - 1;
-//    int lastAddr = 1;
-//    for (int i = 0; i < deviceNum; ++i)
-//    {
-//        device[i]->setAddr(lastAddr);
-//        device[i]->setability(true);
-//        lastAddr += interval;
-//        device[i]->setP(pArray[i]);
-//    }
-
-//    for( int i = 0 ; i < deviceNum ; ++i )
-//    {
-//        device[i]->setAddr(i+1);
-//        device[i]->setability(true);
-//        device[i]->setP(pArray[i]);
-//    }
 
 }
+
+
 void EventArbiBiSearch::arbitration_algorithm(int M, int C)
 {
     int M_pre = M; //上一层的M值
@@ -211,7 +211,7 @@ void EventArbiBiSearch::arbiAlgorithm()
 {
     int return_buff;
 
-    while (messageCounter != totalMessage)
+    while (messageCounter < totalMessage)
     {
         return_buff = send_general_request();
 

@@ -14,17 +14,18 @@ class EventArbiGroupSearch : public EventArbiBase
 {
 private:
     int messageCounter;
-    static const int c_size = 32;
-    static const int m_size = 8;
-    static const int c_address[32];
-    static const int m_address[8];
+    int group_lowerbound;
+    int group_upperbound;
 public:
     EventArbiGroupSearch();
     virtual ~EventArbiGroupSearch();
 public:
     void arbiAlgorithm();
+    void configDevice();
 private:
-    void groupSearch(int,int);
+    void hash_bucket_config();
+    void arbitration_algorithm(int M, int C);
+
 };
 
 #endif /* EVENTARBIGROUPSEARCH_H_ */

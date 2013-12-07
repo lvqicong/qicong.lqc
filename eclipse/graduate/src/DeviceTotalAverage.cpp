@@ -20,7 +20,7 @@ DeviceTotalAverage::~DeviceTotalAverage()
 
 bool DeviceTotalAverage::destriMessage()
 {
-    int average = totalMessage / deviceNum;
+    int average = totalMessage / deviceNum + 1;
     for( int i = 0 ; i < deviceNum ; ++i )
         device[i]->setMessageCount( average );
     return true;
